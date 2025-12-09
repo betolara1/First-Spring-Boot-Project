@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ranetech.demo.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,20 @@ public class HelloController {
     private HelloService helloService;
     
     @GetMapping
-    public String hello() {
-        return helloService.helloMessage("Roberto");
+    public String helloWorld() {
+        return helloService.helloWorld("Roberto");
     }
 
-    @PostMapping
-    public String helloWorldPost(@RequestBody User body) {
-        return "Hello " + body.getName() + " Your email is " + body.getEmail();
+    @PostMapping("/{id}")
+    public String helloWorldPost(@PathVariable("id") String id, @RequestParam(value = "filter", defaultValue = "nenhum") String filter, @RequestBody User body) {
+        return "Hello " + body.getName() + " Your email is " + body.getEmail() + " and your id is " + id + " and your filter is " + filter;
     }
 }
+
+/*
+    O @PathVariable é usado para pegar o valor da variável de rota; exemplo: /hello/123;
+
+    O @RequestParam é usado para pegar o valor do parâmetro da query string; exemplo: /hello?name=Roberto;
+
+    O @RequestBody é usado para pegar o valor do corpo da requisição; exemplo: { "name": "Roberto", "email": "roberto@example.com" };
+*/
