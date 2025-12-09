@@ -1,7 +1,10 @@
 package com.ranetech.demo.controller;
 
+import com.ranetech.demo.domain.User;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.ranetech.demo.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +27,10 @@ public class HelloController {
     @GetMapping
     public String hello() {
         return helloService.helloMessage("Roberto");
+    }
+
+    @PostMapping
+    public String helloWorldPost(@RequestBody User body) {
+        return "Hello " + body.getName() + " Your email is " + body.getEmail();
     }
 }
